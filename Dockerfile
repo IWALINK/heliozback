@@ -42,7 +42,8 @@ RUN if [ ! -f .env ]; then cp .env.example .env; fi
 RUN composer dump-autoload --optimize && \
     php artisan key:generate && \
     php artisan config:cache
-
+# Make entrypoint script executable
+RUN chmod +x /usr/local/bin/entrypoint.sh
 # Set permissions
 RUN chown -R www-data:www-data /var/www && \
     chmod -R 755 /var/www/storage && \
