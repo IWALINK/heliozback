@@ -43,17 +43,11 @@ RUN composer dump-autoload --optimize && \
     php artisan key:generate && \
     php artisan config:cache
 
-# Copy entrypoint script
-COPY entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
 # Set permissions
 RUN chown -R www-data:www-data /var/www && \
     chmod -R 755 /var/www/storage && \
     chmod -R 755 /var/www/bootstrap/cache
 
-# Expose port 9000
+# Expose port 9000 and start php-fpm server
 EXPOSE 9000
-
-# Use entrypoint script
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["php-fpm"]
