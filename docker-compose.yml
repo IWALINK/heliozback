@@ -15,6 +15,16 @@ services:
       - laravel
     depends_on:
       - mysql
+    command: |
+      bash -c "
+        echo 'Waiting for MySQL...'
+        while ! nc -z mysql 3306; do sleep 1; done
+        echo 'Running migrations...'
+        php artisan migrate --force
+        php artisan session:table --force || true
+        php artisan migrate --force
+        echo 'Migrations complete!'
+      "
     ports:
       - "9000:9000"
 

@@ -42,13 +42,23 @@ RUN if [ ! -f .env ]; then cp .env.example .env; fi
 RUN composer dump-autoload --optimize && \
     php artisan key:generate && \
     php artisan config:cache
-# Make entrypoint script executable
+
+# Create migration files (without running them)
+RUN php artisan session:table --force 2>/dev/null || true && \
+    php artisan queue:table --force 2>/dev/null || true
+
+# Copy fixed entrypoint script
+COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
+
 # Set permissions
 RUN chown -R www-data:www-data /var/www && \
-    chmod -R 755 /var/www/storage && \
-    chmod -R 755 /var/www/bootstrap/cache
+    chmod -R 775 /var/www/storage && \
+    chmod -R 775 /var/www/bootstrap/cache && \
+    chgrp -R www-data /var/www/storage /var/www/bootstrap/cache
 
-# Expose port 9000 and start php-fpm server
+# Expose port 9000
 EXPOSE 9000
-CMD ["php-fpm"]
+
+# Use entrypoint script that waits for DB and runs migrations
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
