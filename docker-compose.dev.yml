@@ -31,7 +31,7 @@ services:
       - app
     networks:
       - laravel
-
+      
   mysql:
     image: mysql:8
     container_name: laravel-mysql
@@ -43,7 +43,7 @@ services:
       MYSQL_DATABASE: laravel
       MYSQL_USER: laravel
       MYSQL_PASSWORD: laravel
-     command:
+    command:
       -  --character-set-server=utf8mb4 
       -  --collation-server=utf8mb4_unicode_ci
     ports:
