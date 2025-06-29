@@ -42,7 +42,10 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: laravel
       MYSQL_USER: laravel
-      MYSQL_PASSWORD: laravel  # Changed from 'secret' to 'laravel'
+      MYSQL_PASSWORD: laravel
+     command:
+      -  --character-set-server=utf8mb4 
+      -  --collation-server=utf8mb4_unicode_ci
     ports:
       - "3306:3306"
     networks:
