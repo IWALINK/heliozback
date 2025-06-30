@@ -58,11 +58,10 @@ services:
     command:
       -  --character-set-server=utf8mb4 
       -  --collation-server=utf8mb4_unicode_ci
-    network_mode: "host"
-    # ports:
-    #   - "3306:3306"
-    # networks:
-    #   - laravel
+    ports:
+      - "3306:3306"
+    networks:
+      - laravel
 
 volumes:
   dbdata:
