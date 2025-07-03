@@ -11,24 +11,24 @@ echo "MySQL is ready!"
 # Wait a bit more to ensure MySQL is fully initialized
 sleep 5
 
-# Test database connection
-echo "Testing database connection..."
-until php artisan tinker --execute="DB::connection()->getPdo(); echo 'Connected';" 2>/dev/null; do
-  echo "Database not ready, waiting..."
-  sleep 2
-done
-echo "Database connection successful!"
+# # Test database connection
+# echo "Testing database connection..."
+# until php artisan tinker --execute="DB::connection()->getPdo(); echo 'Connected';" 2>/dev/null; do
+#   echo "Database not ready, waiting..."
+#   sleep 2
+# done
+# echo "Database connection successful!"
 
-# Run migrations
-echo "Running database migrations..."
-php artisan migrate --force
+# # Run migrations
+# echo "Running database migrations..."
+# php artisan migrate --force
 
-# Create session table
-echo "Creating session table..."
-php artisan session:table 2>/dev/null || echo "Session table command completed"
+# # Create session table
+# echo "Creating session table..."
+# php artisan session:table 2>/dev/null || echo "Session table command completed"
 
-# Run migrations again to ensure all tables are created
-php artisan migrate --force
+# # Run migrations again to ensure all tables are created
+# php artisan migrate --force
 
 # Cache configuration for better performance
 echo "Caching configuration..."
